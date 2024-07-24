@@ -1,7 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".PlayActivity"
+    android:background="@drawable/bg_game_play">
 
-</LinearLayout>
+    <!-- Image Frame -->
+    <ImageView
+        android:id="@+id/imageFrame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:src="@drawable/bg_avatar"
+        android:scaleType="centerInside"/>
+
+    <!-- Lives Frame -->
+    <TextView
+        android:id="@+id/livesFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:background="@drawable/ic_heart"
+        android:layout_gravity="top|left" />
+
+    <!-- Score Frame -->
+    <TextView
+        android:id="@+id/scoreFrame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:background="@drawable/bg_coin"
+        android:layout_gravity="top|right"
+        android:padding="16dp"/>
+
+    <!-- Yellow Buttons Layout -->
+    <LinearLayout
+        android:id="@+id/yellowButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- 16 Yellow Buttons -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/yellow"
+            android:text=""/>
+        <!-- Repeat the Button 15 more times or use a loop in code -->
+    </LinearLayout>
+
+    <!-- Gray Buttons Layout -->
+    <LinearLayout
+        android:id="@+id/grayButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- 16 Gray Buttons -->
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/teal_200"
+            android:text=""/>
+        <!-- Repeat the Button 15 more times or use a loop in code -->
+    </LinearLayout>
+
+    <!-- Next Question Button -->
+    <Button
+        android:id="@+id/nextQuestionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:background="@drawable/bg_next"
+        android:text="Next Question"
+        android:visibility="invisible" />
+</FrameLayout>
