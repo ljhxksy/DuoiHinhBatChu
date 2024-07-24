@@ -120,11 +120,11 @@
 
     <!-- Yellow Buttons (Letter choices) -->
     <GridLayout
-        android:layout_marginTop="80dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/yellowButtonsLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|bottom"
         android:columnCount="8"
         android:rowCount="2">
         <!-- Buttons will be added programmatically -->

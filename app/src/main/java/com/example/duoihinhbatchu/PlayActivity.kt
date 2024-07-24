@@ -35,6 +35,146 @@ class PlayActivity : AppCompatActivity() {
         setupNextQuestionButton()
     }
 
+    private fun initializeViews() {
+        imageFrame = findViewById(R.id.imageFrame)
+        grayButtonsLayout = findViewById(R.id.grayButtonsLayout)
+        yellowButtonsLayout = findViewById(R.id.yellowButtonsLayout)
+        nextQuestionButton = findViewById(R.id.nextQuestionButton)
+        scoreFrame = findViewById(R.id.scoreFrame)
+        livesFrame = findViewById(R.id.livesFrame)
+    }
+
+    private fun setupButtons() {
+        // Create gray buttons
+        for (i in 0 until currQuestion.answer.length) {
+            val button = createButton(true)
+            grayButtonsLayout.addView(button)
+            grayButtons.add(button)
+        }
+
+        // Create yellow buttons
+        for (i in 0 until 16) {
+            val button = createButton(false)
+            yellowButtonsLayout.addView(button)
+            yellowButtons.add(button)
+            setupLetters()
+        }
+    }
+
+    private fun setupLetters() {
+        val letters = mutableListOf<Char>()
+
+        // Add letters from the answer
+        letters.addAll(currQuestion.answer.toList())
+
+        // Add random letters until we have 16 letters in total
+        while (letters.size < 16) {
+            val randomLetter = ('A'..'Z').random()
+            letters.add(randomLetter)
+        }
+
+        // Shuffle the letters
+        letters.shuffle()
+
+        // Assign letters to yellow buttons
+        yellowButtons.forEachIndexed { index, button ->
+            button.text = letters[index].toString()
+        }
+    }
+
+    private fun createButton(isGray: Boolean): Button {
+        return Button(this).apply {
+            layoutParams = GridLayout.LayoutParams().apply {
+                setVisible(true)
+                width = resources.getDimensionPixelSize(R.dimen.button_width)
+                height = resources.getDimensionPixelSize(R.dimen.button_height)
+                setMargins(2, 4, 2, 4)
+            }
+            background = ContextCompat.getDrawable(this@PlayActivity,
+                if (isGray) R.drawable.ic_anwser else R.drawable.ic_tile_hover)
+            setTextColor(ContextCompat.getColor(this@PlayActivity, android.R.color.white))
+            textSize = 18f
+            if (!isGray) {
+                setOnClickListener { onYellowButtonClick(this) }
+            }
+        }
+    }
+
+    private fun setupNextQuestionButton() {
+        nextQuestionButton.setOnClickListener {
+            loadQuestion()
+        }
+    }
+
+    private fun loadQuestion() {
+        if (listData.isNotEmpty()) {
+            // Set new answer
+            currQuestion = listData.random()
+
+            // Set new image
+            imageFrame.setImageResource(currQuestion.image)
+
+            // Remove question from data list
+            listData.remove(currQuestion)
+        }
+    }
+
+    private fun onYellowButtonClick(button: Button) {
+        // TODO: Implement logic for yellow button click
+        // Move letter to gray button, check answer, update score/lives
+        val emptyGrayButton = grayButtons.firstOrNull { it.text.isEmpty() }
+
+        // If there is an empty gray button, move the letter from the yellow button to the gray button
+        emptyGrayButton?.let {
+            it.text = button.text
+            button.isEnabled = false
+
+            // Check if all gray buttons are filled
+            if (grayButtons.all { it.text.isNotEmpty() }) {
+                checkAnswer()
+            }
+        }
+    }
+
+
+    private fun updateScore(points: Int) {
+        score += points
+        scoreFrame.text = score.toString()
+    }
+
+    private fun updateLives(change: Int) {
+        lives += change
+        livesFrame.text = lives.toString()
+        if (lives <= 0) {
+            gameOver()
+        }
+    }
+
+    private fun gameOver() {
+        // TODO: Implement game over logic
+        // Show toast, finish activity
+    }
+
+    private fun checkAnswer() {
+        // Construct the current answer from gray buttons
+        val currentAnswer = grayButtons.joinToString("") { it.text.toString() }
+
+        // Compare with the correct answer
+        if (currentAnswer == currQuestion.answer) {
+            // Correct answer, update score and load next question
+            updateScore(10) // Assuming 10 points for correct answer
+            loadQuestion()
+        } else {
+            // Incorrect answer, update lives
+            updateLives(-1)
+            if (lives > 0) {
+                // Clear the gray buttons and re-enable the yellow buttons
+                setupButtons()
+            }
+        }
+    }
+
+
     private fun initQuestions() {
         listData.add(Question("aomua".uppercase(), R.drawable.aomua))
         listData.add(Question("baocao".uppercase(), R.drawable.baocao))
@@ -67,92 +207,4 @@ class PlayActivity : AppCompatActivity() {
         listData.add(Question("xedapdien".uppercase(), R.drawable.xedapdien))
     }
 
-    private fun initializeViews() {
-        imageFrame = findViewById(R.id.imageFrame)
-        grayButtonsLayout = findViewById(R.id.grayButtonsLayout)
-        yellowButtonsLayout = findViewById(R.id.yellowButtonsLayout)
-        nextQuestionButton = findViewById(R.id.nextQuestionButton)
-        scoreFrame = findViewById(R.id.scoreFrame)
-        livesFrame = findViewById(R.id.livesFrame)
-    }
-
-    private fun setupButtons() {
-        // Create gray buttons
-        for (i in 0 until currQuestion.answer.length) {
-            val button = createButton(true)
-            grayButtonsLayout.addView(button)
-            grayButtons.add(button)
-        }
-
-        // Create yellow buttons
-        for (i in 0 until 16) {
-            val button = createButton(false)
-            yellowButtonsLayout.addView(button)
-            yellowButtons.add(button)
-        }
-    }
-
-    private fun createButton(isGray: Boolean): Button {
-        return Button(this).apply {
-            layoutParams = GridLayout.LayoutParams().apply {
-                width = resources.getDimensionPixelSize(R.dimen.button_width)
-                height = resources.getDimensionPixelSize(R.dimen.button_height)
-                setMargins(2, 4, 2, 4)
-            }
-            background = ContextCompat.getDrawable(this@PlayActivity,
-                if (isGray) R.drawable.ic_anwser else R.drawable.ic_tile_hover)
-            setTextColor(ContextCompat.getColor(this@PlayActivity, android.R.color.white))
-            textSize = 18f
-            if (!isGray) {
-                setOnClickListener { onYellowButtonClick(this) }
-            }
-        }
-    }
-
-    private fun setupNextQuestionButton() {
-        nextQuestionButton.setOnClickListener {
-            loadQuestion()
-        }
-    }
-
-    private fun loadQuestion() {
-        while (listData.isNotEmpty()) {
-            // Set new answer
-            currQuestion = listData.random()
-
-            // Set new image
-            imageFrame.setImageResource(currQuestion.image)
-        }
-        // TODO: Remove question from data list after solving
-        //            Remove question from data list
-        //            listData.remove(currQuestion)
-    }
-
-    private fun onYellowButtonClick(button: Button) {
-        // TODO: Implement logic for yellow button click
-        // Move letter to gray button, check answer, update score/lives
-    }
-
-    private fun checkAnswer() {
-        // TODO: Implement logic to check the answer
-        // Update score, lives, button colors
-    }
-
-    private fun updateScore(points: Int) {
-        score += points
-        scoreFrame.text = score.toString()
-    }
-
-    private fun updateLives(change: Int) {
-        lives += change
-        livesFrame.text = lives.toString()
-        if (lives <= 0) {
-            gameOver()
-        }
-    }
-
-    private fun gameOver() {
-        // TODO: Implement game over logic
-        // Show toast, finish activity
-    }
 }
