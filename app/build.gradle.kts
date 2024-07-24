@@ -48,9 +48,13 @@ android {
         }
     }
 }
+dependencies {
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.appcompat.resources)
+}
 
 dependencies {
-
+    implementation(libs.kotlinx.coroutines.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

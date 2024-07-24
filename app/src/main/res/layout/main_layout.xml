@@ -1,85 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".PlayActivity"
     android:background="@drawable/bg_game_play">
 
-    <!-- Image Frame -->
-    <ImageView
-        android:id="@+id/imageFrame"
+    <!-- Top Bar -->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_gravity="center"
-        android:src="@drawable/bg_avatar"
-        android:scaleType="centerInside"/>
-
-    <!-- Lives Frame -->
-    <TextView
-        android:id="@+id/livesFrame"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3"
-        android:background="@drawable/ic_heart"
-        android:layout_gravity="top|left" />
+        android:orientation="horizontal"
+        android:paddingTop="32dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-    <!-- Score Frame -->
-    <TextView
-        android:id="@+id/scoreFrame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:background="@drawable/bg_coin"
-        android:layout_gravity="top|right"
-        android:padding="16dp"/>
+        <!-- Profile Pic -->
+        <ImageView
+            android:layout_width="56dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/ic_avatar"/>
 
-    <!-- Yellow Buttons Layout -->
-    <LinearLayout
-        android:id="@+id/yellowButtonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+        <!-- Score Frame -->
+        <RelativeLayout
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/bg_avatar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
 
-        <!-- 16 Yellow Buttons -->
-        <Button
-            android:layout_width="0dp"
+            <!-- Lives Frame -->
+            <TextView
+                android:id="@+id/livesFrame"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="2dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:text="3"
+                android:background="@drawable/ic_heart"
+                android:gravity="center"/>
+
+        </RelativeLayout>
+
+        <!-- Score Frame-->
+        <TextView
+            android:id="@+id/scoreFrame"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/yellow"
-            android:text=""/>
-        <!-- Repeat the Button 15 more times or use a loop in code -->
-    </LinearLayout>
+            android:background="@drawable/bg_coin"
+            android:paddingStart="32dp"
+            android:gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="true"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp" />
 
-    <!-- Gray Buttons Layout -->
-    <LinearLayout
-        android:id="@+id/grayButtonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal">
+    </RelativeLayout>
 
-        <!-- 16 Gray Buttons -->
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/teal_200"
-            android:text=""/>
-        <!-- Repeat the Button 15 more times or use a loop in code -->
-    </LinearLayout>
 
-    <!-- Next Question Button -->
+
+    <!-- Next Question Frame -->
     <Button
+        android:visibility="invisible"
         android:id="@+id/nextQuestionButton"
+        android:layout_marginTop="32dp"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@drawable/bg_next"
+        android:text="next question"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+
+    <!-- Image Frame -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!-- Image -->
+        <ImageView
+            android:id="@+id/imageFrame"
+            android:layout_marginTop="20dp"
+            android:layout_width="340dp"
+            android:layout_height="280dp"
+            android:src="@color/white"
+            android:scaleType="centerCrop"
+            android:layout_centerHorizontal="true"/>
+
+        <!-- Frame -->
+        <RelativeLayout
+            android:id="@+id/rl_image"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_picture_border"
+            android:gravity="center"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"></RelativeLayout>
+    </RelativeLayout>
+
+    <!-- 16 Gray Buttons -->
+    <GridLayout
+        android:layout_marginTop="56dp"
+        android:id="@+id/grayButtonsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|center"
-        android:background="@drawable/bg_next"
-        android:text="Next Question"
-        android:visibility="invisible" />
-</FrameLayout>
+        android:layout_gravity="center_horizontal"
+        android:columnCount="8"
+        android:rowCount="1">
+        <!-- Buttons will be added programmatically -->
+    </GridLayout>
+
+    <!-- Yellow Buttons (Letter choices) -->
+    <GridLayout
+        android:layout_marginTop="80dp"
+        android:id="@+id/yellowButtonsLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:columnCount="8"
+        android:rowCount="2">
+        <!-- Buttons will be added programmatically -->
+    </GridLayout>
+
+
+</LinearLayout>
