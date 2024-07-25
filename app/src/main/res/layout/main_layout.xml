@@ -64,8 +64,6 @@
 
     </RelativeLayout>
 
-
-
     <!-- Next Question Frame -->
     <Button
         android:visibility="invisible"
@@ -106,9 +104,19 @@
             android:paddingRight="0dp"></RelativeLayout>
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold" />
+
     <!-- 16 Gray Buttons -->
     <GridLayout
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/grayButtonsLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -119,16 +127,23 @@
     </GridLayout>
 
     <!-- Yellow Buttons (Letter choices) -->
-    <GridLayout
-        android:layout_marginBottom="20dp"
-        android:id="@+id/yellowButtonsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal|bottom"
-        android:columnCount="8"
-        android:rowCount="2">
-        <!-- Buttons will be added programmatically -->
-    </GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="bottom">
 
+        <GridLayout
+            android:id="@+id/yellowButtonsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:columnCount="8"
+            android:rowCount="2"
+            android:layout_marginBottom="20dp">
+            <!-- Buttons will be added programmatically -->
+        </GridLayout>
+    </LinearLayout>
 
 </LinearLayout>
